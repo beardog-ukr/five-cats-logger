@@ -1,0 +1,9 @@
+# Some Qt things
+Makefile.Release
+Makefile.Debug
+Makefile
+.qmake.stash
+*.pro.user
+qec_resource.rc
+dcBase.bat
+dc.bat
