@@ -1,7 +1,11 @@
 #include "TestFiveCatsLogger.h"
 
-int main(int , char **)
+#include <QCoreApplication>
+
+int main(int argc, char ** argv)
 {
+  QCoreApplication coreApp(argc,argv);
+
   QStringList testCmd;
 
   TestFiveCatsLogger testFiveCatsLogger;

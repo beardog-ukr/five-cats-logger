@@ -1,6 +1,8 @@
 #include "FiveCatsLogger.h"
 
+#include <QDir>
 #include <QFile>
+#include <QFileInfo>
 #include <QTextStream>
 #include <QCoreApplication>
 
@@ -41,6 +43,12 @@ void FiveCatsLogger::selfSetup() {
 
   setLogLevel(FiveCatsLogger::Critical);
   setUseStdOut(true);
+
+  keepFileExtension = false;
+#ifdef Q_WS_WIN
+  // On Windows it will try to keep file extension by default;
+  keepFileExtension = true;
+#endif
 }
 
 // === ========================================================================
@@ -69,19 +77,16 @@ bool FiveCatsLogger::setFileName(const QString& inFileName, bool append) {
   file = new QFile(fileName);
 
   if ( file->exists() && (append==false)) {
-    int fnc = 1000;
-    QString tmpfns;
-
-    do {
-      tmpfns = fileName + "." + QString::number(fnc);
-      file->setFileName(tmpfns);
-      fnc++;
-    } while ( file->exists() && (fnc<10000) ) ;
-
-    if (fnc>=10000) {
-      errorMessage = QString( "File (%1) exists").arg(inFileName);
+    QString nfn = prepareNewFileName(fileName);
+    if (nfn.isEmpty()) {
+      errorMessage = "File exists and failed to select alternative name";
+      delete file;
+      file =0;
       return false;
     }
+    //else
+    fileName = nfn;
+    file->setFileName(nfn);
   }
 
   bool tboo;
@@ -107,10 +112,42 @@ bool FiveCatsLogger::setFileName(const QString& inFileName, bool append) {
 
 QString FiveCatsLogger::prepareFileName(const QString& fn) const {
   QString result = fn;
+
+  // process keys, if there are any
   const QString keyAppPath = "__APP_PATH" ;
   if (fn.startsWith(keyAppPath)) {
     result.replace(keyAppPath, QCoreApplication::applicationDirPath());
   }
+
+  return result;
+}
+
+// === ========================================================================
+
+QString FiveCatsLogger::prepareNewFileName(const QString& fn) const {
+  QString result = "";
+
+  QString tfn = fn;
+
+  QFileInfo fninfo(fn);
+  if (!fninfo.exists()) {
+    return fn;
+  }
+  QString path = fninfo.canonicalPath();
+  QString baseName = fninfo.completeBaseName();
+  QString suffix = fninfo.suffix();
+
+  for (int fnc=0; fnc<100; fnc++) {
+    QString intStr= QString("%1").arg(fnc, 3, 10, QChar('0'));
+    QString tfn = QString("%1/%2.%3.%4")
+                     .arg(path).arg(baseName).arg(intStr).arg(suffix);
+    QFileInfo tfinfo(tfn);
+    if (!tfinfo.exists()) {
+      result = tfn;
+      break;
+    }
+  }
+
   return result;
 }
 
@@ -223,6 +260,13 @@ void FiveCatsLogger::loadCommandLineParser(const QCommandLineParser& parser) {
   if ( !tmps.isEmpty() ) {
     setFileName(tmps) ;
   }
+}
+
+// === ========================================================================
+
+bool FiveCatsLogger::setKeepFileExtension(const bool keep) {
+  keepFileExtension = keep;
+  return true;
 }
 
 // === ========================================================================

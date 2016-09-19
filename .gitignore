@@ -7,3 +7,4 @@ Makefile
 qec_resource.rc
 dcBase.bat
 dc.bat
+pro/*/build/
