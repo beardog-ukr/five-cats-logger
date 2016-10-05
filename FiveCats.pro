@@ -11,7 +11,11 @@ demoApp.subdir = pro/demoApp
 demoApp.target = demo-app
 demoApp.depends = logger-lib
 
-SUBDIRS =  logger loggerTest demoApp
+appTestA.subdir = pro/appTestA
+appTestA.target = test-app-a
+appTestA.depends = logger-lib
+
+SUBDIRS =  logger loggerTest demoApp appTestA
 
 message(Qt version: $$[QT_VERSION])
 message(Qt is installed in $$[QT_INSTALL_PREFIX])

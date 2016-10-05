@@ -63,7 +63,8 @@ protected:
 
   QFile* file;
   int flushCounter;
-  const int flushFrequency = 20;
+  //const int flushFrequency = 20;
+  int flushFrequency ;
   QString prepareFileName(const QString& fn) const;
   QString prepareNewFileName(const QString& fn) const;
 

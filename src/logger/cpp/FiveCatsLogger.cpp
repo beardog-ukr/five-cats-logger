@@ -44,6 +44,7 @@ void FiveCatsLogger::selfSetup() {
   setLogLevel(FiveCatsLogger::Critical);
   setUseStdOut(true);
 
+  flushFrequency = 2 ;
   keepFileExtension = false;
 #ifdef Q_WS_WIN
   // On Windows it will try to keep file extension by default;
@@ -170,10 +171,6 @@ void FiveCatsLogger::write(LogLevel messageLevel, const QString str) {
   if (file) {
     file->write( tba ) ;
     file->write( QString("\n").toUtf8() ) ;
-//    file->flush();
-
-//    QTextStream out(file);
-//    out << str << "\n";
   }
 
   flushCounter++;
