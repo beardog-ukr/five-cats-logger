@@ -4,6 +4,7 @@ TEMPLATE = lib
 
 CONFIG += console
 CONFIG += static
+CONFIG += release
 
 TARGET = FiveCatsLogger
 
