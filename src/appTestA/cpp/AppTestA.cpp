@@ -92,7 +92,9 @@ void AppTestA::action() {
 //  c5d(c5, __c5_MN__, QString("Writing %1\n").arg(counter) ) ;
 //  qDebug() <<"Action " << counter;
   testDirectCall();
+  testFunctionCallLam();
   testFunctionCall();
+  testFunctionCallLam();
 
   //
   counter++ ;
@@ -169,14 +171,144 @@ void AppTestA::testFunctionCall() {
   c5d(c5, "ODM", bmsg + "Debug Message");
   c5t(c5, "OTM", bmsg + "Trace Message");
   c5f(c5, "OFM", bmsg + "Flood Message");
+}
 
-  //object method call, with "method name" macro
-  c5c(c5, __c5_MN__, bmsg + "Critical Message");
-  c5w(c5, __c5_MN__, bmsg + "Warning Message");
-  c5i(c5, __c5_MN__, bmsg + "Info Message");
-  c5d(c5, __c5_MN__, bmsg + "Debug Message");
-  c5t(c5, __c5_MN__, bmsg + "Trace Message");
-  c5f(c5, __c5_MN__, bmsg + "Flood Message");
+// === =======================================================================
+//  This method uses c5 shortcut functions with lambdas
+void AppTestA::testFunctionCallLam() {
+  //object method call, without metaInfo
+  const QString bmsg = "obj fc ";
+  int capInt = 555;
+
+  c5c(c5, [capInt, bmsg]()->QString {
+    QString msg = QString("%2 Critical (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+
+  c5w(c5, [capInt, bmsg]()->QString {
+    QString msg = QString("%2 Warning (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+
+  c5i(c5, [capInt, bmsg]()->QString {
+    QString msg = QString("%2 Info (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+
+  c5d(c5, [capInt, bmsg]()->QString {
+    QString msg = QString("%2 Debug (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+
+  c5t(c5, [capInt, bmsg]()->QString {
+    QString msg = QString("%2 Trace (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+
+  c5f(c5, [capInt, bmsg]()->QString {
+    QString msg = QString("%2 Flood (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+
+  // again with "metainfo" message
+  c5c(c5, "MICM", [capInt, bmsg]()->QString {
+    QString msg = QString("%2 Critical (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+
+  c5w(c5, "MIWM", [capInt, bmsg]()->QString {
+    QString msg = QString("%2 Warning (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+
+  c5i(c5, "MIIM", [capInt, bmsg]()->QString {
+    QString msg = QString("%2 Info (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+
+  c5d(c5, "MIDM", [capInt, bmsg]()->QString {
+    QString msg = QString("%2 Debug (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+
+  c5t(c5, "MITM", [capInt, bmsg]()->QString {
+    QString msg = QString("%2 Trace (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+
+  c5f(c5, "MIFM", [capInt, bmsg]()->QString {
+    QString msg = QString("%2 Flood (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+}
+
+// === =======================================================================
+
+void AppTestA::testDirectCallLam() {
+  const QString bmsg = "obj dc ";
+  int capInt = 333;
+
+  c5->c([capInt, bmsg]()->QString {
+    QString msg = QString("%2 Critical (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+
+  c5->w([capInt, bmsg]()->QString {
+    QString msg = QString("%2 Warning (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+
+  c5->i([capInt, bmsg]()->QString {
+    QString msg = QString("%2 Info (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+
+  c5->d([capInt, bmsg]()->QString {
+    QString msg = QString("%2 Debug (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+
+  c5->t([capInt, bmsg]()->QString {
+    QString msg = QString("%2 Trace (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+
+  c5->f([capInt, bmsg]()->QString {
+    QString msg = QString("%2 Flood (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+
+  // again with "metainfo" message
+  c5->c("MICM", [capInt, bmsg]()->QString {
+    QString msg = QString("%2 Critical (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+
+  c5->w("MIWM", [capInt, bmsg]()->QString {
+    QString msg = QString("%2 Warning (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+
+  c5->i("MIIM", [capInt, bmsg]()->QString {
+    QString msg = QString("%2 Info (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+
+  c5->d("MIDM", [capInt, bmsg]()->QString {
+    QString msg = QString("%2 Debug (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+
+  c5->t("MITM", [capInt, bmsg]()->QString {
+    QString msg = QString("%2 Trace (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+
+  c5->f("MIFM", [capInt, bmsg]()->QString {
+    QString msg = QString("%2 Flood (%1)").arg(capInt).arg(bmsg);
+    return  msg;
+  });
+
 }
 
 // === =======================================================================

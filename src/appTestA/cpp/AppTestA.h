@@ -42,7 +42,9 @@ protected:
   FiveCatsLogger* c5;
 
   void testDirectCall();
+  void testDirectCallLam();
   void testFunctionCall();
+  void testFunctionCallLam();
 };
 
 // === =======================================================================

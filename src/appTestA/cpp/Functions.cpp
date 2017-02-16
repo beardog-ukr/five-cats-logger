@@ -80,6 +80,21 @@ void zeroCall() {
   c5d(zc5, __c5_MN__, "zC Debug Message");
   c5t(zc5, __c5_MN__, "zC Trace Message");
   c5f(zc5, __c5_MN__, "zC Flood Message");
+
+  c5c(zc5, [](){ return QString("ZC Critical "); });
+  c5w(zc5, [](){ return QString("zC Warning "); });
+  c5i(zc5, [](){ return QString("zC Info "); });
+  c5d(zc5, [](){ return QString("zC Debug "); });
+  c5t(zc5, [](){ return QString("zC Trace "); });
+  c5f(zc5, [](){ return QString("zC Flood "); });
+
+  c5c(zc5, __c5_MN__, [](){ return QString("zC Critical "); });
+  c5w(zc5, __c5_MN__, [](){ return QString("zC Warning "); });
+  c5i(zc5, __c5_MN__, [](){ return QString("zC Info "); });
+  c5d(zc5, __c5_MN__, [](){ return QString("zC Debug "); });
+  c5t(zc5, __c5_MN__, [](){ return QString("zC Trace "); });
+  c5f(zc5, __c5_MN__, [](){ return QString("zC Flood "); });
+
 }
 
 // === =======================================================================

@@ -3,8 +3,10 @@
 
 // === =======================================================================
 #include <typeinfo>
+#include <vector>
 
 #include <QDebug>
+#include <QDateTime>
 #include <QCommandLineParser>
 #include <QTimer>
 // === =======================================================================
@@ -67,8 +69,6 @@ bool DemoApp::prepare() {
   connect(startupTimer, SIGNAL(timeout()),this, SLOT(launch()) );
   startupTimer->start(100);
 
-  // === preform some other actions here
-
   // See how we can use functions here
   c5c(c5, __c5_MN__, "Here C");
   c5w(c5, __c5_MN__, "Here W");
@@ -94,6 +94,26 @@ void DemoApp::launch() {
   c5->d("Launch message Debug");
   c5->t("Launch message Trace");
   c5->f("Launch message Flood");
+
+  // Some lambdas can be used
+  std::vector<int> iarr = {12,23,34,45,56};
+  c5->c([&iarr]() {
+    QString ss("Array elements: ");
+    for (auto ii = iarr.cbegin(); ii!=iarr.cend(); ii++) {
+      ss += QString("%1").arg(*ii) + " | ";
+    }
+
+    ss.chop(2);
+    ss += ".";
+    return ss;
+  });
+
+  // Also lambdas can be used to add timestamp to message
+  int someNumberToLog = 12345;
+  c5w(c5, [someNumberToLog]() {
+    return QString("%1 :: some number is %2")
+              .arg(QDateTime::currentDateTime().toString()).arg(someNumberToLog);
+  });
 
   QCoreApplication::exit(0);
 }

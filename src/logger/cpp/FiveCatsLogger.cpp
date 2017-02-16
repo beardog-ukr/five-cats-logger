@@ -346,6 +346,77 @@ void FiveCatsLogger::f(const QString& message) {
 
 // === ========================================================================
 
+void FiveCatsLogger::writeL(LogLevel messageLevel, std::function<QString()> makeMessage) {
+  if (messageLevel>logLevel) {
+    return;
+  }
+
+  write(messageLevel, makeMessage());
+}
+
+void FiveCatsLogger::writeL(LogLevel messageLevel, const QString& metaInfo, std::function<QString()> makeMessage) {
+  if (messageLevel>logLevel) {
+    return;
+  }
+
+  write(messageLevel, composeLine(metaInfo, makeMessage() ) );
+}
+
+
+// === ========================================================================
+
+void FiveCatsLogger::c(std::function<QString()> makeMessage) {
+  writeL(Critical, makeMessage);
+}
+
+void FiveCatsLogger::w(std::function<QString()> makeMessage) {
+  writeL(Warning, makeMessage);
+}
+
+void FiveCatsLogger::i(std::function<QString()> makeMessage) {
+  writeL(Info, makeMessage);
+}
+
+void FiveCatsLogger::d(std::function<QString()> makeMessage) {
+  writeL(Debug, makeMessage);
+}
+
+void FiveCatsLogger::t(std::function<QString()> makeMessage) {
+  writeL(Trace, makeMessage);
+}
+
+void FiveCatsLogger::f(std::function<QString()> makeMessage) {
+  writeL(Flood, makeMessage);
+}
+
+// === ========================================================================
+
+void FiveCatsLogger::c(const QString& metaInfo, std::function<QString()> makeMessage) {
+  writeL(Critical, metaInfo, makeMessage);
+}
+
+void FiveCatsLogger::w(const QString& metaInfo, std::function<QString()> makeMessage) {
+  writeL(Warning, metaInfo, makeMessage);
+}
+
+void FiveCatsLogger::i(const QString& metaInfo, std::function<QString()> makeMessage) {
+  writeL(Info, metaInfo, makeMessage);
+}
+
+void FiveCatsLogger::d(const QString& metaInfo, std::function<QString()> makeMessage) {
+  writeL(Debug, metaInfo, makeMessage);
+}
+
+void FiveCatsLogger::t(const QString& metaInfo, std::function<QString()> makeMessage) {
+  writeL(Trace, metaInfo, makeMessage);
+}
+
+void FiveCatsLogger::f(const QString& metaInfo, std::function<QString()> makeMessage) {
+  writeL(Flood, metaInfo, makeMessage);
+}
+
+// === ========================================================================
+
 void c5c(FiveCatsLogger* logger, const QString message) {
   if (logger==0) {
     return;
@@ -466,22 +537,103 @@ void c5f(FiveCatsLogger* logger, const QString metaInfo, const QString message) 
 
 // === ========================================================================
 
+void c5c(FiveCatsLogger* logger, std::function<QString()> makeMessage) {
+  if (logger==0) {
+    return;
+  }
 
+  logger->c(makeMessage);
+}
 
+void c5w(FiveCatsLogger* logger, std::function<QString()> makeMessage) {
+  if (logger==0) {
+    return;
+  }
 
+  logger->w(makeMessage);
+}
 
+void c5i(FiveCatsLogger* logger, std::function<QString()> makeMessage) {
+  if (logger==0) {
+    return;
+  }
 
+  logger->i(makeMessage);
+}
 
+void c5d(FiveCatsLogger* logger, std::function<QString()> makeMessage) {
+  if (logger==0) {
+    return;
+  }
 
+  logger->d(makeMessage);
+}
 
+void c5t(FiveCatsLogger* logger, std::function<QString()> makeMessage) {
+  if (logger==0) {
+    return;
+  }
 
+  logger->t(makeMessage);
+}
 
+void c5f(FiveCatsLogger* logger, std::function<QString()> makeMessage) {
+  if (logger==0) {
+    return;
+  }
 
+  logger->f(makeMessage);
+}
 
+// === ========================================================================
 
+void c5c(FiveCatsLogger* logger, const QString metaInfo, std::function<QString()> makeMessage) {
+  if (logger==0) {
+    return;
+  }
 
+  logger->c(metaInfo, makeMessage);
+}
 
+void c5w(FiveCatsLogger* logger, const QString metaInfo, std::function<QString()> makeMessage) {
+  if (logger==0) {
+    return;
+  }
 
+  logger->w(metaInfo, makeMessage);
+}
 
+void c5i(FiveCatsLogger* logger, const QString metaInfo, std::function<QString()> makeMessage) {
+  if (logger==0) {
+    return;
+  }
 
+  logger->i(metaInfo, makeMessage);
+}
 
+void c5d(FiveCatsLogger* logger, const QString metaInfo, std::function<QString()> makeMessage) {
+  if (logger==0) {
+    return;
+  }
+
+  logger->d(metaInfo, makeMessage);
+}
+
+void c5t(FiveCatsLogger* logger, const QString metaInfo, std::function<QString()> makeMessage) {
+  if (logger==0) {
+    return;
+  }
+
+  logger->t(metaInfo, makeMessage);
+}
+
+void c5f(FiveCatsLogger* logger, const QString metaInfo, std::function<QString()> makeMessage) {
+  if (logger==0) {
+    return;
+  }
+
+  logger->f(metaInfo, makeMessage);
+}
+
+// === ========================================================================
+// === ========================================================================

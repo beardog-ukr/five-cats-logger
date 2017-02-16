@@ -2,10 +2,11 @@
 #define __FiveCatsLogger__
 
 #include <string>
-#include <QString>
-#include <QCommandLineParser>
+#include <functional>
 
 class QFile;
+#include <QString>
+#include <QCommandLineParser>
 
 // === ========================================================================
 
@@ -40,17 +41,33 @@ public:
   void loadCommandLineParser(const QCommandLineParser& parser);
 
   void c(const QString& message);
-  void c(const QString& metaInfo, const QString& message) ;
   void w(const QString& message);
-  void w(const QString& metaInfo, const QString& message) ;
   void i(const QString& message);
-  void i(const QString& metaInfo, const QString& message) ;
   void d(const QString& message);
-  void d(const QString& metaInfo, const QString& message) ;
   void t(const QString& message);
-  void t(const QString& metaInfo, const QString& message) ;
   void f(const QString& message);
+
+  void c(const QString& metaInfo, const QString& message) ;
+  void w(const QString& metaInfo, const QString& message) ;
+  void i(const QString& metaInfo, const QString& message) ;
+  void d(const QString& metaInfo, const QString& message) ;
+  void t(const QString& metaInfo, const QString& message) ;
   void f(const QString& metaInfo, const QString& message) ;
+
+  void c(std::function<QString()> makeMessage);
+  void w(std::function<QString()> makeMessage);
+  void i(std::function<QString()> makeMessage);
+  void d(std::function<QString()> makeMessage);
+  void t(std::function<QString()> makeMessage);
+  void f(std::function<QString()> makeMessage);
+
+  void c(const QString& metaInfo, std::function<QString()> makeMessage);
+  void w(const QString& metaInfo, std::function<QString()> makeMessage);
+  void i(const QString& metaInfo, std::function<QString()> makeMessage);
+  void d(const QString& metaInfo, std::function<QString()> makeMessage);
+  void t(const QString& metaInfo, std::function<QString()> makeMessage);
+  void f(const QString& metaInfo, std::function<QString()> makeMessage);
+
 
 protected:
   void selfSetup();
@@ -58,7 +75,8 @@ protected:
   LogLevel logLevel;
 
   void write(LogLevel messageLevel, const QString str);
-
+  void writeL(LogLevel messageLevel, std::function<QString()> makeMessage);
+  void writeL(LogLevel messageLevel, const QString& metaInfo, std::function<QString()> makeMessage);
   void writeFile(const QString& metaInfo, const QString& message);
 
   QFile* file;
@@ -81,17 +99,32 @@ protected:
 // === ========================================================================
 
 void c5c(FiveCatsLogger* logger, const QString message) ;
-void c5c(FiveCatsLogger* logger, const QString metaInfo, const QString message) ;
 void c5w(FiveCatsLogger* logger, const QString message) ;
-void c5w(FiveCatsLogger* logger, const QString metaInfo, const QString message) ;
 void c5i(FiveCatsLogger* logger, const QString message) ;
-void c5i(FiveCatsLogger* logger, const QString metaInfo, const QString message) ;
 void c5d(FiveCatsLogger* logger, const QString message) ;
-void c5d(FiveCatsLogger* logger, const QString metaInfo, const QString message) ;
 void c5t(FiveCatsLogger* logger, const QString message) ;
-void c5t(FiveCatsLogger* logger, const QString metaInfo, const QString message) ;
 void c5f(FiveCatsLogger* logger, const QString message) ;
+
+void c5c(FiveCatsLogger* logger, const QString metaInfo, const QString message) ;
+void c5w(FiveCatsLogger* logger, const QString metaInfo, const QString message) ;
+void c5i(FiveCatsLogger* logger, const QString metaInfo, const QString message) ;
+void c5d(FiveCatsLogger* logger, const QString metaInfo, const QString message) ;
+void c5t(FiveCatsLogger* logger, const QString metaInfo, const QString message) ;
 void c5f(FiveCatsLogger* logger, const QString metaInfo, const QString message) ;
+
+void c5c(FiveCatsLogger* logger, std::function<QString()> makeMessage) ;
+void c5w(FiveCatsLogger* logger, std::function<QString()> makeMessage) ;
+void c5i(FiveCatsLogger* logger, std::function<QString()> makeMessage) ;
+void c5d(FiveCatsLogger* logger, std::function<QString()> makeMessage) ;
+void c5t(FiveCatsLogger* logger, std::function<QString()> makeMessage) ;
+void c5f(FiveCatsLogger* logger, std::function<QString()> makeMessage) ;
+
+void c5c(FiveCatsLogger* logger, const QString metaInfo, std::function<QString()> makeMessage) ;
+void c5w(FiveCatsLogger* logger, const QString metaInfo, std::function<QString()> makeMessage) ;
+void c5i(FiveCatsLogger* logger, const QString metaInfo, std::function<QString()> makeMessage) ;
+void c5d(FiveCatsLogger* logger, const QString metaInfo, std::function<QString()> makeMessage) ;
+void c5t(FiveCatsLogger* logger, const QString metaInfo, std::function<QString()> makeMessage) ;
+void c5f(FiveCatsLogger* logger, const QString metaInfo, std::function<QString()> makeMessage) ;
 
 // === ========================================================================
 // this came from http://stackoverflow.com/questions/1666802/is-there-a-class-macro-in-c

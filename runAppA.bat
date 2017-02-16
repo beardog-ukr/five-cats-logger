@@ -1,1 +1,1 @@
-.\pro\appTestA\build\bin\AppTestA.exe --c5ll "Warning" --num 3 --tc 600
+.\pro\appTestA\build\bin\AppTestA.exe --c5ll "Warning" --num 1 --tc 600
