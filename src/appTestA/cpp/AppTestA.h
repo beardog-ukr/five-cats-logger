@@ -10,6 +10,8 @@ class QTimer;
 
 #include <QStringList>
 
+// === =======================================================================
+
 class AppTestA : public QObject
 {
   Q_OBJECT
@@ -20,6 +22,9 @@ public:
   bool prepareToStart();
   bool processCommandLine();
 
+  FiveCatsLogger* getLoggerInstance();
+
+  QString getErrorMessage();
   int getAppExitCode() const;
 
 public slots:
@@ -28,11 +33,18 @@ public slots:
 protected:
   QTimer* timer;
   int delay;
-
   int counter;
+  int counterLimit;
 
+  QString errorMessage;
   int appExitCode ;
+
   FiveCatsLogger* c5;
+
+  void testDirectCall();
+  void testFunctionCall();
 };
+
+// === =======================================================================
 
 #endif
