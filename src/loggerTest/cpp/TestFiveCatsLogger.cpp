@@ -60,6 +60,7 @@ void TestFiveCatsLogger::prepareNewFileName_Basic3Exists() {
 }
 
 // ============================================================================
+// ============================================================================
 
 void TestFiveCatsLogger::createSomeFile(const QString fileName) {
   QFile fl(fileName);
@@ -68,6 +69,25 @@ void TestFiveCatsLogger::createSomeFile(const QString fileName) {
   fl.write( QString("Dummy text\nMore text\n").toUtf8() ) ;
   fl.flush();
   fl.close();
+}
+
+// ============================================================================
+
+void TestFiveCatsLogger::readAndRemoveFile(const QString& filename, QString& outStr) {
+  QFile fl(filename);
+  if (! fl.open(QFile::ReadOnly )) {
+    QFAIL("Absolutely unexpected error");
+  }
+  QTextStream stream(&fl);
+
+  outStr = "";
+  QString line;
+  while (stream.readLineInto(&line)) {
+    outStr += line;
+  }
+  fl.close();
+
+  QFile::remove(filename);
 }
 
 // ============================================================================

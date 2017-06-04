@@ -19,3 +19,4 @@ HEADERS += ../../src/loggerTest/cpp/TestFiveCatsLogger.h
 
 SOURCES =  ../../src/loggerTest/cpp/TestMain.cpp
 SOURCES += ../../src/loggerTest/cpp/TestFiveCatsLogger.cpp
+SOURCES += ../../src/loggerTest/cpp/TestFiveCatsLoggerLevels.cpp
