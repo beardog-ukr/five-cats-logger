@@ -177,23 +177,23 @@ void TestFiveCatsLogger::levels_BasicFlood() {
   FiveCatsLogger* c5 = new FiveCatsLogger(FiveCatsLogger::Flood);
   c5->setFileName(fn);
 
-  c5->t("1");
-  c5->t("A", "2") ;
-  c5->t([]{return QString("3");});
-  c5->t("B", []{return QString("4");});
+  c5->f("1");
+  c5->f("A", "2") ;
+  c5->f([]{return QString("3");});
+  c5->f("B", []{return QString("4");});
 
-  c5t(c5, "5");
-  c5t(c5, "C", "6") ;
-  c5t(c5, []{return QString("7");});
-  c5t(c5, "D", []{return QString("8");});
+  c5f(c5, "5");
+  c5f(c5, "C", "6") ;
+  c5f(c5, []{return QString("7");});
+  c5f(c5, "D", []{return QString("8");});
 
   delete c5;
 
   QString cs("");
   readAndRemoveFile(fn, cs);
 
-  const QString expected = "1A >> 23B >> 45C >> 67D >> 8";
-  QCOMPARE(cs, expected );
+  const QString es("1A >> 23B >> 45C >> 67D >> 8");
+  QCOMPARE(cs, es );
 }
 
 // ============================================================================
