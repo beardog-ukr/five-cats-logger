@@ -10,6 +10,8 @@ MOC_DIR = build/moc
 OBJECTS_DIR = build/obj
 DESTDIR = build/bin
 
+QMAKE_CXXFLAGS += "-std=c++11"
+
 INCLUDEPATH += "../../src/logger/cpp/"
 LIBS += ../logger/build/bin/libFiveCatsLogger.a
 

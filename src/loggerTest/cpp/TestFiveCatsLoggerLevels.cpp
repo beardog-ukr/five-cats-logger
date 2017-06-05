@@ -47,22 +47,27 @@ void TestFiveCatsLogger::levels_BasicCritical() {
   FiveCatsLogger* c5 = new FiveCatsLogger(FiveCatsLogger::Critical);
   c5->setFileName(fn);
 
+  QString expected = "1A >> 25C >> 6";
   c5->c("1");
   c5->c("A", "2") ;
-  c5->c([]{return QString("3");});
-  c5->c("B", []{return QString("4");});
-
   c5c(c5, "5");
   c5c(c5, "C", "6") ;
+
+
+#if defined( __cpp_lambdas ) 
+  expected += "3B >> 47D >> 8";
+  c5->c([]{return QString("3");});
+  c5->c("B", []{return QString("4");});
   c5c(c5, []{return QString("7");});
   c5c(c5, "D", []{return QString("8");});
+#endif
 
   delete c5;
 
   QString cs("");
   readAndRemoveFile(fn, cs);
 
-  const QString expected = "1A >> 23B >> 45C >> 67D >> 8";
+  
   QCOMPARE(cs, expected );
 }
 
@@ -73,22 +78,25 @@ void TestFiveCatsLogger::levels_BasicWarning() {
   FiveCatsLogger* c5 = new FiveCatsLogger(FiveCatsLogger::Warning);
   c5->setFileName(fn);
 
+  QString expected = "1A >> 25C >> 6";
   c5->w("1");
   c5->w("A", "2") ;
-  c5->w([]{return QString("3");});
-  c5->w("B", []{return QString("4");});
-
   c5w(c5, "5");
   c5w(c5, "C", "6") ;
+
+#if defined( __cpp_lambdas ) 
+  expected += "3B >> 47D >> 8";
+  c5->w([]{return QString("3");});
+  c5->w("B", []{return QString("4");});
   c5w(c5, []{return QString("7");});
   c5w(c5, "D", []{return QString("8");});
+#endif
 
   delete c5;
 
   QString cs("");
   readAndRemoveFile(fn, cs);
 
-  const QString expected = "1A >> 23B >> 45C >> 67D >> 8";
   QCOMPARE(cs, expected );
 }
 
@@ -99,22 +107,25 @@ void TestFiveCatsLogger::levels_BasicInfo() {
   FiveCatsLogger* c5 = new FiveCatsLogger(FiveCatsLogger::Info);
   c5->setFileName(fn);
 
+  QString expected = "1A >> 25C >> 6";
   c5->i("1");
   c5->i("A", "2") ;
-  c5->i([]{return QString("3");});
-  c5->i("B", []{return QString("4");});
-
   c5i(c5, "5");
   c5i(c5, "C", "6") ;
+
+#if defined( __cpp_lambdas ) 
+  expected += "3B >> 47D >> 8";
+  c5->i([]{return QString("3");});
+  c5->i("B", []{return QString("4");});
   c5i(c5, []{return QString("7");});
   c5i(c5, "D", []{return QString("8");});
+#endif
 
   delete c5;
 
   QString cs("");
   readAndRemoveFile(fn, cs);
 
-  const QString expected = "1A >> 23B >> 45C >> 67D >> 8";
   QCOMPARE(cs, expected );
 }
 
@@ -125,22 +136,25 @@ void TestFiveCatsLogger::levels_BasicDebug() {
   FiveCatsLogger* c5 = new FiveCatsLogger(FiveCatsLogger::Debug);
   c5->setFileName(fn);
 
+  QString expected = "1A >> 25C >> 6";
   c5->d("1");
   c5->d("A", "2") ;
-  c5->d([]{return QString("3");});
-  c5->d("B", []{return QString("4");});
-
   c5d(c5, "5");
   c5d(c5, "C", "6") ;
+
+#if defined( __cpp_lambdas ) 
+  expected += "3B >> 47D >> 8";
+  c5->d([]{return QString("3");});
+  c5->d("B", []{return QString("4");});
   c5d(c5, []{return QString("7");});
   c5d(c5, "D", []{return QString("8");});
+#endif
 
   delete c5;
 
   QString cs("");
   readAndRemoveFile(fn, cs);
 
-  const QString expected = "1A >> 23B >> 45C >> 67D >> 8";
   QCOMPARE(cs, expected );
 }
 
@@ -151,22 +165,25 @@ void TestFiveCatsLogger::levels_BasicTrace() {
   FiveCatsLogger* c5 = new FiveCatsLogger(FiveCatsLogger::Trace);
   c5->setFileName(fn);
 
+  QString expected = "1A >> 25C >> 6";
   c5->t("1");
   c5->t("A", "2") ;
-  c5->t([]{return QString("3");});
-  c5->t("B", []{return QString("4");});
-
   c5t(c5, "5");
   c5t(c5, "C", "6") ;
+
+#if defined( __cpp_lambdas ) 
+  expected += "3B >> 47D >> 8";
+  c5->t([]{return QString("3");});
+  c5->t("B", []{return QString("4");});
   c5t(c5, []{return QString("7");});
   c5t(c5, "D", []{return QString("8");});
+#endif
 
   delete c5;
 
   QString cs("");
   readAndRemoveFile(fn, cs);
 
-  const QString expected = "1A >> 23B >> 45C >> 67D >> 8";
   QCOMPARE(cs, expected );
 }
 
@@ -177,25 +194,30 @@ void TestFiveCatsLogger::levels_BasicFlood() {
   FiveCatsLogger* c5 = new FiveCatsLogger(FiveCatsLogger::Flood);
   c5->setFileName(fn);
 
-  c5->t("1");
-  c5->t("A", "2") ;
-  c5->t([]{return QString("3");});
-  c5->t("B", []{return QString("4");});
+  QString expected = "1A >> 25C >> 6";
+  c5->f("1");
+  c5->f("A", "2") ;
+  c5f(c5, "5");
+  c5f(c5, "C", "6") ;
 
-  c5t(c5, "5");
-  c5t(c5, "C", "6") ;
-  c5t(c5, []{return QString("7");});
-  c5t(c5, "D", []{return QString("8");});
+#if defined( __cpp_lambdas ) 
+  expected += "3B >> 47D >> 8";
+  c5->f([]{return QString("3");});
+  c5->f("B", []{return QString("4");});
+  c5f(c5, []{return QString("7");});
+  c5f(c5, "D", []{return QString("8");});
+#endif
 
   delete c5;
 
   QString cs("");
   readAndRemoveFile(fn, cs);
 
-  const QString expected = "1A >> 23B >> 45C >> 67D >> 8";
   QCOMPARE(cs, expected );
 }
 
 // ============================================================================
 // ============================================================================
 // ============================================================================
+
+

@@ -372,7 +372,7 @@ void FiveCatsLogger::f(const QString& message) {
 }
 
 // === ========================================================================
-
+#if defined( __cpp_lambdas ) 
 void FiveCatsLogger::writeL(LogLevel messageLevel, std::function<QString()> makeMessage) {
   if (messageLevel>logLevel) {
     return;
@@ -388,10 +388,10 @@ void FiveCatsLogger::writeL(LogLevel messageLevel, const QString& metaInfo, std:
 
   write(messageLevel, composeLine(metaInfo, makeMessage() ) );
 }
-
+#endif
 
 // === ========================================================================
-
+#if defined( __cpp_lambdas ) 
 void FiveCatsLogger::c(std::function<QString()> makeMessage) {
   writeL(Critical, makeMessage);
 }
@@ -415,9 +415,9 @@ void FiveCatsLogger::t(std::function<QString()> makeMessage) {
 void FiveCatsLogger::f(std::function<QString()> makeMessage) {
   writeL(Flood, makeMessage);
 }
-
+#endif
 // === ========================================================================
-
+#if defined( __cpp_lambdas ) 
 void FiveCatsLogger::c(const QString& metaInfo, std::function<QString()> makeMessage) {
   writeL(Critical, metaInfo, makeMessage);
 }
@@ -441,7 +441,7 @@ void FiveCatsLogger::t(const QString& metaInfo, std::function<QString()> makeMes
 void FiveCatsLogger::f(const QString& metaInfo, std::function<QString()> makeMessage) {
   writeL(Flood, metaInfo, makeMessage);
 }
-
+#endif
 // === ========================================================================
 
 void c5c(FiveCatsLogger* logger, const QString message) {
@@ -563,7 +563,7 @@ void c5f(FiveCatsLogger* logger, const QString metaInfo, const QString message) 
 }
 
 // === ========================================================================
-
+#if defined( __cpp_lambdas ) 
 void c5c(FiveCatsLogger* logger, std::function<QString()> makeMessage) {
   if (logger==0) {
     return;
@@ -611,9 +611,9 @@ void c5f(FiveCatsLogger* logger, std::function<QString()> makeMessage) {
 
   logger->f(makeMessage);
 }
-
+#endif
 // === ========================================================================
-
+#if defined( __cpp_lambdas ) 
 void c5c(FiveCatsLogger* logger, const QString metaInfo, std::function<QString()> makeMessage) {
   if (logger==0) {
     return;
@@ -661,6 +661,6 @@ void c5f(FiveCatsLogger* logger, const QString metaInfo, std::function<QString()
 
   logger->f(metaInfo, makeMessage);
 }
-
+#endif
 // === ========================================================================
 // === ========================================================================
